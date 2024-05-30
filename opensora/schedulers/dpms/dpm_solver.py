@@ -443,7 +443,7 @@ def model_wrapper(
             noise = noise_pred_fn(x, t_continuous)
             return noise - guidance_scale * expand_dims(sigma_t, x.dim()) * cond_grad
         elif guidance_type == "classifier-free":
-            if guidance_scale == 1.0 or unconditional_condition is None:
+            if math.isclose(guidance_scale, 1.0, rel_tol=1e-09, abs_tol=0.0) or unconditional_condition is None:
                 return noise_pred_fn(x, t_continuous, cond=condition)
             x_in = torch.cat([x] * 2)
             t_in = torch.cat([t_continuous] * 2)

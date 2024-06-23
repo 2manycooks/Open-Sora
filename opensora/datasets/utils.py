@@ -1,4 +1,3 @@
-import random
 from typing import Iterator, Optional
 
 import numpy as np
@@ -10,6 +9,7 @@ from torch.utils.data import DataLoader, Dataset
 from torch.utils.data.distributed import DistributedSampler
 from torchvision.io import write_video
 from torchvision.utils import save_image
+import secrets
 
 
 def save_sample(x, fps=8, save_path=None, normalize=True, value_range=(-1, 1)):
@@ -104,7 +104,7 @@ def prepare_dataloader(
         worker_seed = seed
         np.random.seed(worker_seed)
         torch.manual_seed(worker_seed)
-        random.seed(worker_seed)
+        secrets.SystemRandom().seed(worker_seed)
 
     return DataLoader(
         dataset,

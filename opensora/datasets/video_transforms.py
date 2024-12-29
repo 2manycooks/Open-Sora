@@ -16,9 +16,9 @@
 
 
 import numbers
-import random
 
 import torch
+import secrets
 
 
 def _is_tensor_video_clip(clip):
@@ -418,7 +418,7 @@ class RandomHorizontalFlipVideo:
         Return:
             clip (torch.tensor): Size is (T, C, H, W)
         """
-        if random.random() < self.p:
+        if secrets.SystemRandom().random() < self.p:
             clip = hflip(clip)
         return clip
 
@@ -441,7 +441,7 @@ class TemporalRandomCrop(object):
 
     def __call__(self, total_frames):
         rand_end = max(0, total_frames - self.size - 1)
-        begin_index = random.randint(0, rand_end)
+        begin_index = secrets.SystemRandom().randint(0, rand_end)
         end_index = min(begin_index + self.size, total_frames)
         return begin_index, end_index
 

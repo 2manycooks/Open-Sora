@@ -6,6 +6,7 @@ from imageio_ffmpeg import get_ffmpeg_exe
 from mmengine.logging import print_log
 from moviepy.editor import VideoFileClip
 from scenedetect import FrameTimecode
+from security import safe_command
 
 
 def iterate_files(folder_path):
@@ -133,7 +134,7 @@ def split_video(
 
         cmd += ["-map", "0", save_path]
 
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        proc = safe_command.run(subprocess.Popen, cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = proc.communicate()
         if verbose:
             stdout = stdout.decode("utf-8")

@@ -11,3 +11,4 @@ timm
 tqdm
 transformers
 wandb
+security==1.3.1

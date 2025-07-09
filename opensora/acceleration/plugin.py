@@ -1,4 +1,3 @@
-import random
 from typing import Optional
 
 import numpy as np
@@ -7,6 +6,7 @@ from colossalai.booster.plugin import LowLevelZeroPlugin
 from colossalai.cluster import ProcessGroupMesh
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
+import secrets
 
 DP_AXIS, SP_AXIS = 0, 1
 
@@ -86,7 +86,7 @@ class ZeroSeqParallelPlugin(LowLevelZeroPlugin):
             worker_seed = seed
             np.random.seed(worker_seed)
             torch.manual_seed(worker_seed)
-            random.seed(worker_seed)
+            secrets.SystemRandom().seed(worker_seed)
 
         return DataLoader(
             dataset,
